@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.render_page),
+    path('resume',views.render_page,name='res'),
+    path('get',views.get_input,name='input'),
     #path('add/<slug:field>',views.add_field,name = "add_field")
 ]
