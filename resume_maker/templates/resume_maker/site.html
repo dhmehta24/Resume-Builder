@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "resume_maker/style.css" %}">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <header>
+        <blockquote class=" blockquote mx-2
+    "><span class="namehead">{{ name }}</span>
+    <figure class="float-right ">
+        <img scr="#" alt="LOGO">
+    </figure>
+    <footer class="footer">
+        GEnder,AGE
+    </footer>
+    </blockquote>
+    <div class="d-flex justify-content-center text-center">
+        <h6>Phone:<span class="footerr pr-4"> PHONE</span></h6>
+        <h6>Email:<span class="footerr">EMAIL</span></h6>
+    </div>
+    <div class="d-flex justify-content-center text-center">
+        <p class="footerr">ADDRESS</p>
+    </div>
+    </header>
+    <article>
+        <div class="mt-3 edu">
+            <h4 class="mx-3 text-dark">Education</h4>
+            <hr class="pt-2"/>
+        </div>
+        <section class="m-4 bg-light ">
+            <table class="table table-borderless">
+                <thead>
+                <tr>
+
+                    <th scope="col">Degree</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Institute</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Remarks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+
+                    <td>DEGREE</td>
+                    <td>YEAR</td>
+                    <td>INSTITUTE</td>
+                    <td>SCORE</td>
+                    <td>REMARKS</td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </section>
+        <div class="mt-3 edu">
+            <h4 class="mx-3 text-dark">Work Experiance</h4>
+            <hr class="pt-2"/>
+        </div>
+        <section class="m-4 bg-light work ">
+            <div class="d-flex">
+                <p class="font-weight-light">Profile:</p>
+                <p class="font-weight-bold mx-3">TITLE</p>
+            </div>
+            <div class="d-flex">
+                <p class="font-weight-light">Description:</p>
+                <p class="font-weight-normal mx-3">DESCRIPTION</p>
+
+            </div>
+        </section>
+        <section>
+            <div class="mt-3 edu">
+                <h4 class="mx-3 text-dark">Position of Responsibility Head</h4>
+                <hr class="pt-2"/>
+            </div>
+            <table class="table m-3 bg-light">
+                <thead>
+                <tr>
+
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <div class="mt-3 edu">
+                <h4 class="mx-3 text-dark">Projects/Industrial Training/Certifications</h4>
+                <hr class="pt-2"/>
+            </div>
+        </section>
+        <!-- ////////// -->
+        <section>
+            <div class="mt-3 edu">
+                <h4 class="mx-3 text-dark">Academic Achievents And Awards</h4>
+                <hr class="pt-2"/>
+            </div>
+        </section>
+        <!-- ///// -->
+        <section>
+            <div class="mt-3 edu">
+                <h4 class="mx-3 text-dark">Extra-Curricular Activaties And Achievents</h4>
+                <hr class="pt-2"/>
+            </div>
+        </section>
+    </article>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    </body>
+
+</html>
