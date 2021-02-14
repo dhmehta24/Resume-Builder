@@ -19,8 +19,14 @@ def submit_data(request):
     if request.method == "POST":
         person = PersonForm()
 def get_input(request):
-    new_name = request.POST.get("name")
+    if request.method == "POST":
+        new_name = request.POST.get("name")
+    else:
+        new_name=None
     context={
         "name":new_name
     }
+    print(request.POST)
+    print('//////////')
+    print(new_name)
     return render(request,"resume_maker/getinput.html",context)
