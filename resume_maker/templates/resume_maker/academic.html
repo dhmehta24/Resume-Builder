@@ -1,0 +1,146 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" rel="stylesheet">
+    <link href="{% static "resume_maker/style.css" %}" rel="stylesheet">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+<header>
+    <nav class="bg-lggr">
+
+        <div class="d-flex justify-content-between">
+            <p class="display-4 ">PORTINY</p>
+
+        </div>
+    </nav>
+
+</header>
+<div class="container my-5 px-5 ">
+<div class="progress  " id="movebar">
+  <div class="progress-bar bg-lggr" role="progressbar" aria-valuenow="50"
+  aria-valuemin="0" aria-valuemax="100" style="width:90%">
+        <span class="font-weight-bold text-dark">90%</span>
+
+  </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="p-2 m-4 bg-lggr">
+        <h3 class="m-2 text-center font-weight-bold">Academic Achievents And Awards</h3>
+    </div>
+    <hr class="mx-auto horiline"/>
+    <div class="container shadow-sm p-3 mb-5 bg-white rounded">
+        <!--    <form class="">-->
+
+
+        <!--        <div class="form-group mx-5">-->
+        <!--            <label for="exampleFormControlTextarea1" class="font-weight-bold">Academic Achievents And Awards</label>-->
+        <!--            <textarea class="form-control inputt" id="exampleFormControlTextarea1" rows="5"></textarea>-->
+        <!--        </div>-->
+
+
+        <!--    </form>-->
+        <div class="row">
+            <button class="btn btn-primary mx-auto bg-light text-dark modbtn align-self-start" data-target="#exampleModalCenter"
+                    data-toggle="modal"
+                    type="button">
+                + Add Academic Achievents
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade mow" id="exampleModalCenter"
+             role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modcont">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Academic Achievents And Awards</h5>
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container shadow-sm  bg-white rounded ">
+                            <form class=" d-flex flex-column flex-wrap" method="post">{% csrf_token %}
+                                <div class="form-group mx-5">
+                                    <label class="font-weight-bold" for="exampleFormControlTextarea1">Academic
+                                        Achievents And Awards</label>
+                                    <textarea name="academic" class="form-control inputt" id="exampleFormControlTextarea1"
+                                              rows="5"></textarea>
+                                </div>
+
+
+                               <div class="align-self-center ">
+
+                                    <button class="btn btn-white" type="submit">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="d-flex justify-content-between inputt mx-auto">
+                <a class=" " href="project.html">
+                    <button class="btn btn-primary  bg-light text-dark modbtn" type="button"
+                    >
+                        Back
+                    </button>
+                </a>
+                <a class="  " href="extra.html">
+                    <button class="btn btn-primary  bg-light text-dark modbtn" type="submit"
+                    >
+                        {{ aca_save }}
+                    </button>
+                </a>
+            </div>>
+        <br/>
+        {% if not degree == None and not degree == '' %}
+        <div class="row">
+            <div class="col-4" style="min-width: 165px">
+                <ul class="modlist">
+
+
+                    <li><span class="font-weight-bold pr-3">Academic:</span><span class="float-right"> {{ academic }}</span>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script crossorigin="anonymous"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>
