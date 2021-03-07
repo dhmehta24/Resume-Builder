@@ -31,13 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'resume_maker'
+    'crispy_forms',
+    'resume_maker',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,"Templates")
+            os.path.join(BASE_DIR,"templates")
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -122,4 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DATE_INPUT_FORMATS = ["%d/%m/%y"]
+#DATE_INPUT_FORMATS = ["%d/%m/%y"]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
