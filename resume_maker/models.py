@@ -2,16 +2,18 @@ from django.db import models
 
 # Create your models here.
 class Person(models.Model):
+    id = models.AutoField(primary_key = True)
     first_name = models.CharField(max_length=25)
     middle_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    email = models.EmailField(unique=True)
-    mobile_no = models.IntegerField(unique=True)
+    email = models.EmailField()
+    mobile_no = models.IntegerField()
     age = models.IntegerField()
-    address = models.TextField(unique=True)
-    github = models.URLField(blank=True,unique=True)
-    linkedin = models.URLField(blank=True,unique=True)
-    website = models.URLField(blank=True,unique=True)
+    dob = models.DateField()
+    address = models.TextField()
+    github = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null= True)
+    website = models.URLField(blank=True,null = True)
 
     def full_name(self):
         return " ".join([self.first_name, self.middle_name, self.last_name])
@@ -22,12 +24,17 @@ class Person(models.Model):
 class Education(models.Model):
     Degrees = (
         ('PhD','PhD'),
-        ('Mtech/MA/MSc/MCom/MBA','Masters'),
-        ('BE/Btech/BA/BSc/BCom','Bachelors'),
-        ('12th','High School')
+        ('Masters','Masters'),
+        ('Bachelors','Bachelors'),
+        ('High School','High School')
+    )
+    Status = (
+        ('Pursuing','Pursuing'),
+        ('Completed','Completed')
     )
     person = models.ForeignKey(Person,on_delete=models.CASCADE)
     qualification = models.CharField(choices=Degrees,max_length=25)
+    status = models.CharField(choices = Status, max_length = 25)
     institution = models.CharField(max_length=75)
     board = models.CharField(max_length=75)
     start_yr = models.DateField()
@@ -41,6 +48,7 @@ class Education(models.Model):
 class Experience(models.Model):
     person = models.ForeignKey(Person,on_delete=models.CASCADE)
     company = models.CharField(max_length=150)
+    role = models.CharField(max_length = 270)
     join_dt = models.DateField()
     left_dt = models.DateField()
     details = models.TextField()

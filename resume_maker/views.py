@@ -1,145 +1,214 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse
 from .forms import *
-# Create your views here.
+from .models import *
+from .utils import render_to_pdf
+#from weasyprint import HTML
+from django.template.loader import render_to_string
 
+try:
+    personId = Person.objects.last().id
+except AttributeError:
+    personId = 1
 
-def get_input(request):
-
-    if request.method == "POST":
-        new_name = request.POST.get("name")
-        new_email = request.POST.get("email")
-        new_phone = request.POST.get("phone")
-        new_github = request.POST.get("github")
-        new_linked= request.POST.get("linkedin")
-        new_dob = request.POST.get("dob")
-        new_address = request.POST.get("address")
-
-
-        show=True
-    else:
-        new_name=None
-        show=False
-        new_email = None
-        new_phone = None
-        new_github = None
-        new_linked = None
-        new_dob = None
-        new_address = None
-
-    context={
-        "name":new_name,
-        "email": new_email,
-        "phone": new_phone,
-        "github": new_github,
-        "linked": new_linked,
-        "dob": new_dob,
-        "address_": new_address,
-        "show":show,
-
-    }
-
-    print('//////////')
-    print(request.POST)
-    return render(request,"resume_maker/getinput.html",context)
-
-def render_page(request):
-
-
-
-    context={
-
-        "person":PersonForm,
+forms = {
+              "person":PersonForm,
               "edu": EducationForm,
               "exp": ExperienceForm,
               "skills": SkillsForm,
               "projects": ProjectsForm,
               "lang": LanguageForm,
               "ach": AchievementsForm,
-              "hobby": HobbiesForm}
+              "hobby": HobbiesForm
+}
 
-    return render(request,"resume_maker/site.html",)
+# Create your views here.
+def render_page(request):
+    person = Person.objects.last()
+    education = Education.objects.filter(person_id=personId)
+    exp = Experience.objects.filter(person_id=personId)
+    skill = SkillSet.objects.filter(person_id=personId)
+    prjct = Projects.objects.filter(person_id=personId)
+    ach = Achievements.objects.filter(person_id=personId)
+
+    context = {
+        "person": person,
+        "education": education,
+        "exp": exp,
+        "skill": skill,
+        "prjct": prjct,
+        "lang": Languages,
+        "ach": ach,
+        "hobb": Hobbies,
+    }
+
+    return render(request,"site.html",context)
+
+
+def personal_det(request):
+    return render(request,"getinput.html", { "person":PersonForm})
+
+def get_input(request):
+    show = False
+    if request.method == "POST":
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #edu(request)
+            show = True
+            return render(request,"getinput.html",{ "form":form,"person":person,"show":show})
+    else:
+        form = PersonForm()
+
+    """if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        age = request.POST.get("age")
+        gender = request.POST.get("gender")
+        phno = request.POST.get("phone")
+        addre = request.POST.get("address")
+        github = request.POST.get("github")
+        linkedin = request.POST.get("linkedin")
+        website = request.POST.get("website")
+
+        data = Person(first_name = name.split()[0], middle_name = name.split()[1], last_name = name.split()[-1], email = email, mobile_no = phno, age = age, address = addre, github = github, linkedin = linkedin, website = website)
+        data.save()
+
+        return render(request,"Education.html", { "edu" : EducationForm})
+
+    else:"""
+    return render(request, "getinput.html",{ "form" : form,"show":show})
+
 def edu(request):
-
     if request.method == "POST":
-        new_degree=request.POST.get('Degree')
-        new_year = request.POST.get('year')
-        new_score = request.POST.get('score')
-        new_institute = request.POST.get('institute')
-        show = True
+        form = EducationForm(request.POST or None)
+        """data = get_object_or_404(Person, pk=educ.id)
+        #print(data)
+        form = EducationForm(request.POST, instance=data)
+        if form.is_valid():
+            Education(person_id = educ.id).save()
+            form.save()
+            print("Data Saved")"""
+        if form.is_valid():
+            cd = form.cleaned_data
+            degree = cd.get('degree')
+            qualification = cd.get('qualification')
+            institution = cd.get('institution')
+            board = cd.get('board')
+            start_yr = cd.get('start_yr')
+            end_yr = cd.get('end_yr')
+            cgpa = cd.get('cgpa')
+            percent = cd.get('percent')
 
-        # print(new_degree)
-        # print(new_year)
-
+            data = Education(qualification = qualification, institution = institution, board = board, start_yr = start_yr, end_yr = end_yr, cgpa = cgpa, percent = percent,person_id=personId)
+            data.save()
+            print("Data Saved")
     else:
-        new_degree=None
-        new_year = None
-        new_score = None
-        new_institute = None
-        show = False
+        form = EducationForm()
 
-    context={
-        'degree':new_degree,
-        'score': new_score,
-        'year': new_year,
-     'institute': new_institute,
-        "show": show,
 
-    }
-    return render(request,"resume_maker/Education.html",context)
+
+
+    """if request.method == "POST":
+        qual = request.POST.get("qual")
+        yr = request.POST.get("year")
+        inst = request.POST.get("inst")
+        score = request.POST.get("score")
+        rem = request.POST.get("remarks")"""
+    return render(request,"Education.html",{"edu":form})
+
 def wor(request):
+    print(personId)
     if request.method == "POST":
-        save='Next'
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            company = cd.get('company')
+            role = cd.get('role')
+            join_dt = cd.get('join_dt')
+            left_dt = cd.get('left_dt')
+            details = cd.get('details')
+
+            data = Experience(company = company,role = role, join_dt = join_dt, left_dt = left_dt, details = details, person_id = personId)
+            data.save()
     else:
-        save='Skip'
-    # print('#####')
-    # print(save)
-    context={
-        'Save':save
-    }
-    return render(request,"resume_maker/work.html",context)
-def pos(request):
+        form = ExperienceForm()
+    return render(request,"work.html",{ "exp" : form})
+
+def skill(request):
     if request.method == "POST":
-        save='Next'
+        form = SkillsForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            skill = cd.get('skill')
+
+            data = SkillSet(skill = skill,person_id = personId)
+            data.save()
     else:
-        save='Skip'
-    # print('#####')
-    # print(save)
-    context={
-        'pos_save':save
-    }
-    return render(request,"resume_maker/position.html",context)
+        form = SkillsForm()
+    return render(request,"skillset.html", { "skill": form})
 
 def pro(request):
     if request.method == "POST":
-        save='Next'
-    else:
-        save='Skip'
-    # print('#####')
-    # print(save)
-    context={
-        'pro_save':save
-    }
-    return render(request,"resume_maker/project.html",context)
+        form = ProjectsForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = cd.get('project')
+            start_dt = cd.get('start_dt')
+            end_dt = cd.get('end_dt')
+            project_link = cd.get('project_link')
 
-def aca(request):
-    if request.method == "POST":
-        save='Next'
+            data = Projects(project = project, start_dt = start_dt, end_dt = end_dt, project_link = project_link, person_id = personId)
+            data.save()
     else:
-        save='Skip'
-    # print('#####')
-    # print(save)
-    context={
-        'aca_save':save
-    }
-    return render(request,"resume_maker/academic.html",context)
+        form = ProjectsForm()
+    return render(request,"project.html", {"prjct": form})
+
+def lang(request):
+    if request.method == "POST":
+        form = LanguageForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = LanguageForm()
+    return render(request,"languages.html", { "lang": form })
+
 def ext(request):
     if request.method == "POST":
-        save='Show My Resume'
+        form = AchievementsForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            achievement= cd.get('achievement')
+
+            data = Achievements(achievement = achievement,person_id = personId)
+            data.save()
     else:
-        save='Skip and Show my Resume'
-    # print('#####')
-    # print(save)
-    context={
-        'show_resume':save
-    }
-    return render(request,"resume_maker/extra.html",context)
+        form = AchievementsForm()
+    return render(request,"extra.html", { "ach" : form})
+
+def get_pdf(request):
+    pass
+
+    """content = Person.objects.last()
+
+    pdf = render_to_pdf("site.html")
+
+    return HttpResponse(pdf, content_type = "application/pdf")
+
+    return render_to_pdf(
+            "site.html",
+            {
+                "pagesize":"A4",
+                "data": content,
+            })"""
+
+    """html_string = render_to_string('site.html')
+    
+    html = HTML(string = html_string)
+
+    html.write_pdf(target = 'resume.pdf')"""
+
+
+
+
+
